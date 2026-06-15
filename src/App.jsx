@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Products from "./pages/Products";
+import Product from "./pages/Product";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Dashboard from "./admin/Dashboard";
@@ -24,12 +24,12 @@ function App() {
 
       <Route
         path="/products"
-        element={<Products />}
+        element={<Product />}
       />
 
       <Route
         path="/products/:category"
-        element={<Products />}
+        element={<Product />}
       />
 
       <Route
