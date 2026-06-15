@@ -47,18 +47,22 @@ function App() {
     </ProtectedRoute>
   }
 />
+
 <Route
   path="/products"
-  element={<Products />}
+  element={<Product />}
 />
+
+<Route
+  path="/products/:category"
+  element={<Product />}
+/>
+
 <Route
   path="/cart"
   element={<Cart />}
 />
-<Route
-  path="/products/:category"
-  element={<Products />}
-/>
+
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
       <Route
