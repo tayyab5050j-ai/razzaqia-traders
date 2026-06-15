@@ -1,6 +1,6 @@
 import useStoreSettings from "../hooks/useStoreSettings";
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarTemp";
 import Sidebar from "../components/Sidebar";
 import { db } from "../services/firebase";
 import {

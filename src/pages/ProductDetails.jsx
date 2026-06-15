@@ -2,7 +2,7 @@ import useStoreSettings from "../hooks/useStoreSettings";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import BackButton from "../components/BackButton";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarTemp";
 import Sidebar from "../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
