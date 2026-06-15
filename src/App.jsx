@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Product from "./pages/Product";
+import Product from "./pages/product";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Dashboard from "./admin/Dashboard";
