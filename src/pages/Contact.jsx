@@ -22,7 +22,7 @@ export default function Contact() {
       `Name: ${form.name}%0A` +
       `Phone: ${form.phone}%0A%0A` +
       `Message: ${form.message}`;
-    window.open(`https://wa.me/923001234567?text=${text}`, "_blank");
+    window.open(`https://wa.me/923079459966?text=${text}`, "_blank");
     setSent(true);
     setForm({ name: "", phone: "", message: "" });
   };
@@ -35,7 +35,7 @@ export default function Contact() {
       <div className="contact-page">
 
         <div className="contact-hero">
-          <span className="contact-badge">📍 LAHORE, PAKISTAN</span>
+          <span className="contact-badge">📍 MODEL TOWN, LAHORE, PAKISTAN</span>
           <h1>Get In Touch</h1>
           <p>Have a question or want to place a custom order? We're here to help.</p>
         </div>
@@ -47,28 +47,28 @@ export default function Contact() {
             <div className="contact-info-card">
               <div className="contact-icon">📞</div>
               <h3>Call Us</h3>
-              <p>+92 300 123 4567</p>
+              <p>+92 321 9459966</p>
               <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>Mon–Sat, 10am–8pm</p>
             </div>
 
             <div className="contact-info-card">
               <div className="contact-icon">📍</div>
               <h3>Visit Us</h3>
-              <p>Lahore, Punjab</p>
+              <p>MODEL TOWN, LAHORE, PAKISTAN</p>
               <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>Pakistan</p>
             </div>
 
             <div className="contact-info-card">
               <div className="contact-icon">💬</div>
               <h3>WhatsApp</h3>
-              <p>+92 300 123 4567</p>
+              <p>+92 307 9459966</p>
               <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>Quick replies</p>
             </div>
 
             <div className="contact-info-card">
               <div className="contact-icon">✉️</div>
               <h3>Email</h3>
-              <p>info@razzaqia.com</p>
+              <p>info@razzaqiatraders.pk</p>
               <p style={{ color: "var(--text-muted)", fontSize: "13px" }}>24hr response</p>
             </div>
 

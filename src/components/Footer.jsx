@@ -11,10 +11,10 @@ export default function Footer() {
             <span className="logo-orange"> TRADERS</span>
           </div>
           <p className="footer-tagline">
-            Lahore's trusted destination for genuine electronics since 2005. Quality products, competitive prices, excellent service.
+            Lahore's trusted destination for genuine electronics since 1978. Quality products, competitive prices, excellent service.
           </p>
           <div className="footer-social">
-            <a href="https://wa.me/923001234567" target="_blank" rel="noreferrer" className="social-btn whatsapp">
+            <a href="https://wa.me/923079459966" target="_blank" rel="noreferrer" className="social-btn whatsapp">
               WhatsApp
             </a>
             <a href="https://facebook.com" target="_blank" rel="noreferrer" className="social-btn facebook">
@@ -43,10 +43,10 @@ export default function Footer() {
 
         <div className="footer-links-col">
           <h4>Contact</h4>
-          <p className="footer-contact-item">📍 Lahore, Punjab, Pakistan</p>
-          <p className="footer-contact-item">📞 +92 300 123 4567</p>
-          <p className="footer-contact-item">🕐 Mon–Sat: 10am – 8pm</p>
-          <p className="footer-contact-item">✉️ info@razzaqiatraders.com</p>
+          <p className="footer-contact-item">📍 MODEL TOWN, LAHORE, PAKISTAN</p>
+          <p className="footer-contact-item">📞 +92 321 9459966</p>
+          <p className="footer-contact-item">🕐 Mon–Sat: 11am – 9pm</p>
+          <p className="footer-contact-item">✉️ info@razzaqiatraders.PK</p>
         </div>
 
       </div>
