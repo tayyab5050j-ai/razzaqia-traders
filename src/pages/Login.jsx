@@ -21,9 +21,11 @@ export default function Login() {
 
   return (
     <div className="login-wrapper">
+      <div style={{ position: "absolute", top: "20px", left: "20px" }}>
+        <BackButton />
+      </div>
       <div className="login-card">
         <h2>Owner Login</h2>
-
         <form onSubmit={login}>
           <input
             placeholder="Email"
