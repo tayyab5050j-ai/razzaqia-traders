@@ -276,6 +276,16 @@ body {
   width: 100%;
   max-width: 960px;
 }
+.hero-watermark {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 55%;
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
 
 .location {
   display: inline-block;

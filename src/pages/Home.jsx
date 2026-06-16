@@ -99,6 +99,12 @@ const [bannerLoading, setBannerLoading] =
 
       {!bannerLoading && (
 <section className="hero">
+  {banner?.logoWatermark && (
+  <div
+    className="hero-watermark"
+    style={{ backgroundImage: `url(${banner.logoWatermark})` }}
+  />
+)}
 
 
         <div className="hero-content">
