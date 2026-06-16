@@ -10,6 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function Home() {
 
@@ -324,6 +325,7 @@ const [bannerLoading, setBannerLoading] =
 
       </section>
 
+      <Footer />
     </>
   );
-}
+}// Footer import added at top — see note below
