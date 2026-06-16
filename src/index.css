@@ -1431,8 +1431,15 @@ body {
   .cart-btn { padding: 10px 14px; font-size: 13px; }
   .hero h1 { font-size: 42px; }
   .category-grid { padding: 28px 16px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
-  .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 240px)); gap: 18px; justify-content: start; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; justify-content: start; }
   .product-details { padding: 24px 16px; }
+  .product-card img { height: 160px; padding: 12px; }
+  .product-info { padding: 14px 14px 16px; }
+  .product-info h3 { font-size: 13px; min-height: auto; margin-bottom: 6px; }
+  .price { font-size: 16px; }
+  .card-buttons { gap: 7px; margin-top: 12px; }
+  .details-btn, .order-btn { height: 38px; font-size: 12px; }
+  .category-badge { font-size: 9px; padding: 4px 8px; }
   .product-bottom-layout { padding: 0 16px 48px; }
   .featured-products { padding: 48px 16px; }
   .about-section { padding: 56px 20px; }
@@ -1782,4 +1789,9 @@ body {
   .contact-form-card { padding: 28px 20px; }
   .form-row { grid-template-columns: 1fr; }
   .contact-submit-btn { width: 100%; text-align: center; }
+}
+
+/* ─── TOUCH ZOOM: only product detail image zoomable ─────── */
+.product-details-image img {
+  touch-action: pinch-zoom;
 }
