@@ -44,7 +44,7 @@ export default function Navbar({ openSidebar }) {
   }
   onKeyDown={handleSearch}
   style={{
-    color: "#111",
+    color: "#ffffff",
   }}
 />
       </div>
