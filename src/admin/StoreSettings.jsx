@@ -51,6 +51,7 @@ export default function StoreSettings() {
       await setDoc(doc(db, "settings", "store"), {
         storeName, whatsapp, phone, email, address, hours, facebook,
       });
+      
 
       await setDoc(doc(db, "banners", "homepage"), {
         title: heroTitle,
