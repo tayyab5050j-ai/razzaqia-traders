@@ -74,7 +74,11 @@ export default function Home() {
 
           {heroImage && (
             <div className="hero-image">
-              <img src={heroImage} alt="Homepage Banner" />
+              <img
+                src={heroImage}
+                alt="Homepage Banner"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
           )}
         </section>
