@@ -1,9 +1,5 @@
 import { db } from "../services/firebase";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import useStoreSettings from "../hooks/useStoreSettings";
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
@@ -27,7 +23,12 @@ export default function Cart() {
       alert("Please fill all customer details");
       return;
     }
-    if (!settings?.whatsapp) return;
+
+    const number = settings?.whatsapp;
+    if (!number) {
+      alert("WhatsApp number not configured. Please contact the store.");
+      return;
+    }
 
     try {
       const orderItems = cart.map((item) => ({
@@ -57,16 +58,16 @@ export default function Cart() {
         `I want to order:%0A%0A`;
 
       cart.forEach((item) => {
-        message += `• ${item.name} x ${item.quantity} - Rs. ${item.price}%0A`;
+        message += `• ${item.name} x ${item.quantity} - Rs. ${Number(item.price).toLocaleString()}%0A`;
       });
 
       message += `%0A--------------------%0A`;
-      message += `Total: Rs. ${totalPrice}%0A`;
+      message += `Total: Rs. ${totalPrice.toLocaleString()}`;
 
-      window.open(`https://wa.me/${settings.whatsapp}?text=${message}`, "_blank");
+      window.open(`https://wa.me/${number}?text=${message}`, "_blank");
     } catch (error) {
       console.error(error);
-      alert("Failed to create order");
+      alert("Failed to create order. Please try again.");
     }
   };
 
@@ -86,11 +87,9 @@ export default function Cart() {
             {cart.map((item) => (
               <div key={item.id} className="cart-item">
                 <img src={item.imageUrl} alt={item.name} />
-
                 <div className="cart-item-info">
                   <h3>{item.name}</h3>
                   <p>Rs. {Number(item.price).toLocaleString()}</p>
-
                   <div className="qty-controls">
                     <button className="qty-btn" onClick={() => decreaseQuantity(item.id)}>−</button>
                     <span style={{ fontWeight: 700, minWidth: "24px", textAlign: "center" }}>{item.quantity}</span>
@@ -125,7 +124,7 @@ export default function Cart() {
             </div>
 
             <button className="whatsapp-btn" onClick={checkoutWhatsApp}>
-              Checkout via WhatsApp
+              💬 Checkout via WhatsApp
             </button>
           </>
         )}
