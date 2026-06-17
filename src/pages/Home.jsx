@@ -15,6 +15,8 @@ export default function Home() {
   const [bannerLoading, setBannerLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const settings = useStoreSettings();
+  const showLocation = settings?.showLocation !== false;
+  const showHeroButton = settings?.showHeroButton !== false;
 
   useEffect(() => {
     loadProducts();
@@ -55,17 +57,19 @@ export default function Home() {
       {!bannerLoading && (
         <section className="hero">
           <div className="hero-content">
-            <p className="location">📍 LAHORE, PAKISTAN</p>
+            {showLocation && <p className="location">📍 LAHORE, PAKISTAN</p>}
             <h1>{banner?.title}</h1>
             <p className="hero-description">{banner?.subtitle}</p>
-            <div className="hero-buttons">
-              <button
-                className="shop-btn"
-                onClick={() => navigate(banner?.buttonLink || "/products")}
-              >
-                {banner?.buttonText}
-              </button>
-            </div>
+            {showHeroButton && (
+              <div className="hero-buttons">
+                <button
+                  className="shop-btn"
+                  onClick={() => navigate(banner?.buttonLink || "/products")}
+                >
+                  {banner?.buttonText}
+                </button>
+              </div>
+            )}
           </div>
 
           {heroImage && (

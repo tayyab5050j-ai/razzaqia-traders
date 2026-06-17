@@ -18,6 +18,8 @@ export default function StoreSettings() {
   const [heroSubtitle, setHeroSubtitle] = useState("");
   const [heroButtonText, setHeroButtonText] = useState("");
   const [heroButtonLink, setHeroButtonLink] = useState("");
+  const [showHeroButton, setShowHeroButton] = useState(true);
+  const [showLocation, setShowLocation] = useState(true);
   const [bannerImageDesktop, setBannerImageDesktop] = useState("");
   const [bannerImageMobile, setBannerImageMobile] = useState("");
 
@@ -48,8 +50,6 @@ export default function StoreSettings() {
   const [footerShopHeading, setFooterShopHeading] = useState("");
   const [footerCompanyHeading, setFooterCompanyHeading] = useState("");
   const [footerBottomText, setFooterBottomText] = useState("");
-
-  useEffect(() => { loadSettings(); }, []);
 
   const loadSettings = async () => {
     const settingsSnap = await getDoc(doc(db, "settings", "store"));
@@ -91,6 +91,10 @@ export default function StoreSettings() {
       setFooterShopHeading(data.footerShopHeading || "Shop");
       setFooterCompanyHeading(data.footerCompanyHeading || "Company");
       setFooterBottomText(data.footerBottomText || "Made with ❤️ in Lahore");
+
+      // Hero Banner Visibility
+      setShowHeroButton(data.showHeroButton !== false);
+      setShowLocation(data.showLocation !== false);
     }
 
     const bannerSnap = await getDoc(doc(db, "banners", "homepage"));
@@ -104,6 +108,8 @@ export default function StoreSettings() {
       setBannerImageMobile(b.imageMobile || "");
     }
   };
+
+  useEffect(() => { loadSettings(); }, []);
 
   const saveSettings = async () => {
     try {
@@ -125,6 +131,9 @@ export default function StoreSettings() {
         footerBrandText, footerTagline,
         footerShopHeading, footerCompanyHeading,
         footerBottomText,
+        // Hero Banner Visibility
+        showHeroButton,
+        showLocation,
       });
 
       await setDoc(doc(db, "banners", "homepage"), {
@@ -239,10 +248,35 @@ export default function StoreSettings() {
         <input placeholder="Button Link (e.g. /products)" value={heroButtonLink} onChange={(e) => setHeroButtonLink(e.target.value)} />
 
         <hr />
+        <h2>Homepage Banner — Visibility</h2>
+        <div style={{ marginTop: "12px", display: "flex", flexDirection: "column", gap: "12px" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer", fontSize: "15px" }}>
+            <input
+              type="checkbox"
+              checked={showHeroButton}
+              onChange={(e) => setShowHeroButton(e.target.checked)}
+              style={{ width: "18px", height: "18px", accentColor: "var(--gold)" }}
+            />
+            <span>Show "Shop Now" Button on Hero Banner</span>
+          </label>
+          <label style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer", fontSize: "15px" }}>
+            <input
+              type="checkbox"
+              checked={showLocation}
+              onChange={(e) => setShowLocation(e.target.checked)}
+              style={{ width: "18px", height: "18px", accentColor: "var(--gold)" }}
+            />
+            <span>Show Location Tag (LAHORE, PAKISTAN) on Hero Banner</span>
+          </label>
+        </div>
+
+        <hr />
         <h2>Homepage Banner — Images</h2>
-        <p style={{ color: "var(--text-muted)", fontSize: "13px", marginTop: "8px" }}>
-          Desktop image shows on the <strong>right side</strong> of the banner (recommended: tall product photo, transparent background, min 800×1000px).<br />
-          Mobile image is <strong>hidden on mobile</strong> — only the text shows on small screens unless you set a mobile image.
+        <p style={{ color: "var(--text-muted)", fontSize: "13px", marginTop: "8px", lineHeight: 1.6 }}>
+          <strong>Exact Banner Dimensions (no cropping — images use <code>object-fit: contain</code>):</strong><br />
+          • <strong>Desktop Banner:</strong> Shows on right side of hero. Recommended: <strong>800×1000px</strong> (4:5 aspect ratio) or <strong>1000×1250px</strong>. Tall product photo with transparent background works best.<br />
+          • <strong>Mobile Banner:</strong> Hidden by default on mobile (≤768px). If provided, displays full-width above text. Recommended: <strong>1200×600px</strong> (2:16:3 aspect ratio).<br />
+          • Images are <strong>never cropped</strong> — they scale to fit within their container maintaining aspect ratio.
         </p>
 
         <label style={{ display: "block", marginTop: "16px", fontWeight: 600, fontSize: "14px", color: "var(--text-dark)" }}>

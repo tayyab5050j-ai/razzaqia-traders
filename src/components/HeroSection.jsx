@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useAppSelector } from '../hooks/useAppSelector';
+import { FaSearch, FaShoppingCart } from 'react-icons/fa';
 import debounce from 'lodash.debounce';
 
-export default function HeroSection({ bannerId = 'homepage' }) {
+export default function HeroSection({ bannerId = 'homepage', showLocation = true, showHeroButton = true }) {
   const navigate = useNavigate();
   const { cartLength } = useCart();
-  const showSearch = useAppSelector(state => state.ui.showSearch);
 
   const [banner, setBanner] = useState(null);
   const [bannerLoading, setBannerLoading] = useState(true);
@@ -139,23 +138,24 @@ export default function HeroSection({ bannerId = 'homepage' }) {
           }}
         >
           <div className="hero-content" style={{ maxWidth: '960px', margin: '0 auto' }}>
-            <p className="location" style={{
-              display: 'inline-block',
-              background: 'rgba(201,137,42,0.12)',
-              border: '1px solid rgba(201,137,42,0.25)',
-              padding: '8px 20px',
-              borderRadius: '40px',
-              marginBottom: '28px',
-              fontWeight: '700',
-              textTransform: 'uppercase',
-              letterSpacing: '4px'
-            }}>
-              LAHORE, PAKISTAN
-            </p>
+            {showLocation && (
+              <p className="location" style={{
+                display: 'inline-block',
+                background: 'rgba(201,137,42,0.12)',
+                border: '1px solid rgba(201,137,42,0.25)',
+                padding: '8px 20px',
+                borderRadius: '40px',
+                marginBottom: '28px',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                letterSpacing: '4px'
+              }}>
+                LAHORE, PAKISTAN
+              </p>
+            )}
             <h1 style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: 'clamp(48px, 8vw, 88px)',
-              fontWeight: '800',
               fontWeight: '800',
               lineHeight: '1.05',
               letterSpacing: '-1px',
@@ -173,52 +173,54 @@ export default function HeroSection({ bannerId = 'homepage' }) {
               {banner.subtitle}
             </p>
 
-            <div className="hero-buttons" style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '16px',
-              marginTop: '44px',
-              flexWrap: 'wrap'
-            }}>
-              <button
-                className="shop-btn"
-                style={{
-                  background: 'linear-gradient(135deg, var(--gold-bright), var(--gold))',
-                  color: 'white',
-                  border: 'none',
-                  padding: '18px 56px',
-                  fontSize: '17px',
-                  fontWeight: '700',
-                  borderRadius: 'var(--radius-lg)',
-                  cursor: 'pointer',
-                  boxShadow: '0 12px 32px rgba(201,137,42,0.4)',
-                  transition: 'all 0.25s',
-                  letterSpacing: '0.3px',
-                  fontFamily: "'Inter', sans-serif"
-                }}
-                onClick={() => navigate(banner.buttonLink || '/products')}
-              >
-                {banner.buttonText}
-              </button>
+            {showHeroButton && (
+              <div className="hero-buttons" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '16px',
+                marginTop: '44px',
+                flexWrap: 'wrap'
+              }}>
+                <button
+                  className="shop-btn"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--gold-bright), var(--gold))',
+                    color: 'white',
+                    border: 'none',
+                    padding: '18px 56px',
+                    fontSize: '17px',
+                    fontWeight: '700',
+                    borderRadius: 'var(--radius-lg)',
+                    cursor: 'pointer',
+                    boxShadow: '0 12px 32px rgba(201,137,42,0.4)',
+                    transition: 'all 0.25s',
+                    letterSpacing: '0.3px',
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                  onClick={() => navigate(banner.buttonLink || '/products')}
+                >
+                  {banner.buttonText}
+                </button>
 
-              <button
-                className="about-btn"
-                style={{
-                  background: 'rgba(255,255,255,0.08)',
-                  color: 'white',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  padding: '18px 40px',
-                  fontSize: '17px',
-                  fontWeight: '600',
-                  borderRadius: 'var(--radius-lg)',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s'
-                }}
-                onClick={() => navigate('/products')}
-              >
-                Shop Now
-              </button>
-            </div>
+                <button
+                  className="about-btn"
+                  style={{
+                    background: 'rgba(255,255,255,0.08)',
+                    color: 'white',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    padding: '18px 40px',
+                    fontSize: '17px',
+                    fontWeight: '600',
+                    borderRadius: 'var(--radius-lg)',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s'
+                  }}
+                  onClick={() => navigate('/products')}
+                >
+                  Shop Now
+                </button>
+              </div>
+            )}
           </div>
         </section>
       )}
