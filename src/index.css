@@ -235,18 +235,50 @@ body {
 /* ─── HERO ───────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 88vh;
+  height: 600px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 70% 20%, rgba(201,137,42,0.18) 0%, transparent 55%),
     radial-gradient(ellipse at 10% 80%, rgba(30,47,130,0.35) 0%, transparent 50%),
     linear-gradient(160deg, #060C2A 0%, #0B1340 45%, #112070 100%);
   color: white;
-  padding: 60px 24px;
+  padding: 0 64px;
+}
+
+/* ─── HERO IMAGE (desktop right side) ───────────────────── */
+.hero-image {
+  flex-shrink: 0;
+  width: 420px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+}
+.hero-image img {
+  width: 100%;
+  height: 520px;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 48px rgba(0,0,0,0.35));
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 480px;
+    padding: 0 24px;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero-image { display: none; }
+  .hero-content { max-width: 100%; text-align: center; }
+  .hero h1 { font-size: clamp(32px, 8vw, 52px); }
+  .hero-description { font-size: 15px; margin-top: 16px; }
+  .hero-buttons { margin-top: 28px; }
+  .shop-btn { padding: 14px 36px; font-size: 15px; }
 }
 
 /* Subtle grid overlay */
