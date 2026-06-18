@@ -12,10 +12,13 @@ import AddProduct from "./admin/AddProduct";
 import ProductDetails from "./pages/ProductDetails";
 import ManageProducts from "./admin/ManageProducts";
 import EditProduct from "./admin/EditProduct";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 function App() {
   return (
-    <Routes>
+    <>
+      <WhatsAppButton />
+      <Routes>
 
       <Route
         path="/"
@@ -107,6 +110,7 @@ function App() {
       />
 
     </Routes>
+    </>
   );
 }
 
