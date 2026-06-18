@@ -26,6 +26,10 @@ const [imageUrl2, setImageUrl2] = useState("");
 const [description, setDescription] = useState("");
 const [specifications, setSpecifications] = useState("");
 
+const [badgeText, setBadgeText] = useState("");
+const [badgeBgColor, setBadgeBgColor] = useState("#C9892A");
+const [badgeTextColor, setBadgeTextColor] = useState("#FFFFFF");
+
 const [loading, setLoading] = useState(false);
 const { categories, loading: categoriesLoading } = useCategories();
 
@@ -50,6 +54,9 @@ if (docSnap.exists()) {
   setDescription(data.description || "");
   setSpecifications(data.specifications || "");
   setFeatured(data.featured || false);
+  setBadgeText(data.badgeText || "");
+  setBadgeBgColor(data.badgeBgColor || "#C9892A");
+  setBadgeTextColor(data.badgeTextColor || "#FFFFFF");
 }
 
 
@@ -91,6 +98,9 @@ try {
       specifications,
       featured,
       stock: Number(stock),
+      badgeText,
+      badgeBgColor,
+      badgeTextColor,
     }
   );
 
@@ -273,6 +283,43 @@ return (
         {" "}
         Featured Product
       </label>
+    </div>
+
+    <hr style={{ marginTop: "20px", marginBottom: "10px" }} />
+    <h3 style={{ marginTop: "0", marginBottom: "12px", fontSize: "16px" }}>Custom Badge (Optional)</h3>
+    <input
+      placeholder="Badge Text (e.g. NEW, SALE, BESTSELLER)"
+      value={badgeText}
+      onChange={(e) => setBadgeText(e.target.value)}
+      style={{
+        width: "100%",
+        padding: "12px",
+        marginTop: "8px",
+      }}
+    />
+    <div style={{ display: "flex", gap: "12px", marginTop: "12px" }}>
+      <div style={{ flex: 1 }}>
+        <label style={{ display: "block", fontSize: "13px", marginBottom: "4px", fontWeight: 600 }}>
+          Badge Background Color
+        </label>
+        <input
+          type="color"
+          value={badgeBgColor}
+          onChange={(e) => setBadgeBgColor(e.target.value)}
+          style={{ width: "100%", height: "40px", border: "1px solid var(--border)", borderRadius: "6px", cursor: "pointer" }}
+        />
+      </div>
+      <div style={{ flex: 1 }}>
+        <label style={{ display: "block", fontSize: "13px", marginBottom: "4px", fontWeight: 600 }}>
+          Badge Text Color
+        </label>
+        <input
+          type="color"
+          value={badgeTextColor}
+          onChange={(e) => setBadgeTextColor(e.target.value)}
+          style={{ width: "100%", height: "40px", border: "1px solid var(--border)", borderRadius: "6px", cursor: "pointer" }}
+        />
+      </div>
     </div>
 
     <button

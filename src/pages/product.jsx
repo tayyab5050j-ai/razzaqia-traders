@@ -145,12 +145,13 @@ export default function Products() {
                           alt={product.name}
                         />
                       )}
-                      {product.featured && (
-                        <span className="product-badge-featured">Featured</span>
+                      {product.badgeText && (
+                        <span className="product-badge-custom" style={{ position: 'absolute', top: '8px', left: '8px', zIndex: 2, background: product.badgeBgColor || '#C9892A', color: product.badgeTextColor || '#FFFFFF', whiteSpace: 'nowrap', padding: '4px 10px', borderRadius: '40px', fontSize: '10px', fontWeight: '800', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                          {product.badgeText}
+                        </span>
                       )}
                     </div>
                     <div className="product-info">
-                      <span className="category-badge">{product.category || "NEW"}</span>
                       <h3>{product.name}</h3>
                       <p className="price">Rs. {Number(product.price).toLocaleString()}</p>
                       <div className="product-card-footer">

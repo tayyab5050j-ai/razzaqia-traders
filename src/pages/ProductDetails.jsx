@@ -130,7 +130,11 @@ export default function ProductDetails() {
         </div>
 
         <div className="product-details-info">
-          <span className="product-page-badge">NEW</span>
+          {product.badgeText && (
+            <span className="product-page-badge" style={{ background: product.badgeBgColor || '#C9892A', color: product.badgeTextColor || '#FFFFFF' }}>
+              {product.badgeText}
+            </span>
+          )}
           <h1>{product.name}</h1>
           <div className="product-rating">★★★★★ 4.9 Rating</div>
           <h2>Rs. {Number(product.price).toLocaleString()}</h2>

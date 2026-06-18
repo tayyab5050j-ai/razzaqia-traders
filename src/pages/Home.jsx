@@ -108,9 +108,15 @@ export default function Home() {
               key={product.id}
               className="product-card product-card-link"
             >
-              <img src={product.imageUrl} alt={product.name} />
+              <div className="product-card-image-wrap" style={{ background: 'var(--cream)', overflow: 'hidden', position: 'relative' }}>
+                <img src={product.imageUrl} alt={product.name} style={{ width: '100%', height: '220px', objectFit: 'contain', padding: '20px' }} />
+                {product.badgeText && (
+                  <span className="product-badge-custom" style={{ background: product.badgeBgColor || '#C9892A', color: product.badgeTextColor || '#FFFFFF' }}>
+                    {product.badgeText}
+                  </span>
+                )}
+              </div>
               <div className="product-info">
-                <span className="category-badge">NEW</span>
                 <h3>{product.name}</h3>
                 <p className="price">Rs. {Number(product.price).toLocaleString()}</p>
                 <div className="card-buttons">

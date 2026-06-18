@@ -1816,6 +1816,27 @@ body {
   font-size: 11px; font-weight: 700;
   padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px;
 }
+
+.product-badge-custom {
+  font-size: 10px; font-weight: 800;
+  padding: 4px 10px; border-radius: 40px; letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.category-badge {
+  background: var(--navy);
+  color: var(--gold-bright);
+  padding: 4px 10px;
+  border-radius: 40px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .product-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
 .product-card-rating { color: var(--gold-bright); font-size: 12px; }
 .product-card-view { font-size: 12px; font-weight: 600; color: var(--navy); opacity: 0; transition: opacity 0.2s; }
