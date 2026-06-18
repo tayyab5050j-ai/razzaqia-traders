@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../services/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { uploadImage } from "../services/cloudinary";
+import useCategories from "../hooks/useCategories";
 
 export default function EditProduct() {
 
@@ -26,10 +27,7 @@ const [description, setDescription] = useState("");
 const [specifications, setSpecifications] = useState("");
 
 const [loading, setLoading] = useState(false);
-
-useEffect(() => {
-loadProduct();
-}, []);
+const { categories, loading: categoriesLoading } = useCategories();
 
 const loadProduct = async () => {
 
@@ -56,6 +54,10 @@ if (docSnap.exists()) {
 
 
 };
+
+useEffect(() => {
+  loadProduct();
+}, []);
 
 const updateProduct = async () => {
 
@@ -190,34 +192,16 @@ return (
         padding: "12px",
         marginTop: "15px",
       }}
+      disabled={categoriesLoading}
     >
       <option value="">
         Select Category
       </option>
-
-      <option value="Mobiles">
-        Mobiles
-      </option>
-
-      <option value="Kitchen Appliances">
-        Kitchen Appliances
-      </option>
-
-      <option value="Refrigerators">
-        Refrigerators
-      </option>
-
-      <option value="Washing Machines">
-        Washing Machines
-      </option>
-
-      <option value="Speakers">
-        Speakers
-      </option>
-
-      <option value="Home Appliances">
-        Home Appliances
-      </option>
+      {categories.map((cat) => (
+        <option key={cat.id} value={cat.id}>
+          {cat.name}
+        </option>
+      ))}
     </select>
 
     <textarea
@@ -309,7 +293,8 @@ return (
     </button>
 
   </div>
-</>
+ </>
+ 
 
 
 );

@@ -5,11 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { db } from "../services/firebase";
 import { collection, getDocs } from "firebase/firestore";
-
-const CATEGORIES = [
-  "All", "Mobiles", "Kitchen Appliances", "Refrigerators",
-  "Washing Machines", "Speakers", "Home Appliances"
-];
+import useCategories from "../hooks/useCategories";
 
 export default function Products() {
   const { category } = useParams();
@@ -18,11 +14,10 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(category || "All");
   const [sort, setSort] = useState("default");
+  const { categories, loading: categoriesLoading } = useCategories();
 
   useEffect(() => {
-    setActiveCategory(category || "All");
     loadProducts();
   }, [category, search]);
 
@@ -34,7 +29,13 @@ export default function Products() {
       querySnapshot.forEach((doc) => {
         items.push({ id: doc.id, ...doc.data() });
       });
-      if (category) items = items.filter((p) => p.category === category);
+      if (category) {
+        const catLower = category.toLowerCase();
+        items = items.filter((p) => 
+          p.category?.toLowerCase() === catLower ||
+          p.category?.toLowerCase() === catLower.replace(/-/g, ' ')
+        );
+      }
       if (search) items = items.filter(
         (p) =>
           p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -60,7 +61,15 @@ export default function Products() {
       <Navbar openSidebar={() => setSidebarOpen(true)} />
       <Sidebar open={sidebarOpen} closeSidebar={() => setSidebarOpen(false)} />
 
-      <div className="products-page">
+      {categoriesLoading && (
+        <div className="products-page" style={{ padding: "60px 32px", textAlign: "center" }}>
+          <div className="loading-spinner" style={{ margin: "0 auto 16px" }} />
+          <p>Loading categories...</p>
+        </div>
+      )}
+
+      {!categoriesLoading && (
+        <div className="products-page">
 
         <div className="products-page-header">
           <div>
@@ -88,17 +97,19 @@ export default function Products() {
           <aside className="products-sidebar">
             <h3>Categories</h3>
             <nav className="category-nav">
-              {CATEGORIES.map((cat) => (
+              <Link
+                to="/products"
+                className={`category-nav-item ${!category ? "active" : ""}`}
+              >
+                All
+              </Link>
+              {categories.map((cat) => (
                 <Link
-                  key={cat}
-                  to={cat === "All" ? "/products" : `/products/${cat}`}
-                  className={`category-nav-item ${
-                    (cat === "All" && !category) || cat === category
-                      ? "active"
-                      : ""
-                  }`}
+                  key={cat.id}
+                  to={`/products/${cat.id}`}
+                  className={`category-nav-item ${cat.id === category ? "active" : ""}`}
                 >
-                  {cat}
+                  {cat.icon} {cat.name}
                 </Link>
               ))}
             </nav>
@@ -154,7 +165,8 @@ export default function Products() {
           </div>
 
         </div>
-      </div>
+        </div>
+      )}
 
       <Footer />
     </>

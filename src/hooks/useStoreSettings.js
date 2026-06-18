@@ -1,37 +1,25 @@
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../services/firebase";
 
 export default function useStoreSettings() {
-
-  const [settings, setSettings] =
-    useState(null);
+  const [settings, setSettings] = useState(null);
 
   useEffect(() => {
-
-    const loadSettings = async () => {
-
-      const docRef = doc(
-        db,
-        "settings",
-        "store"
-      );
-
-      const docSnap =
-        await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        setSettings(
-          docSnap.data()
-        );
+    const unsubscribe = onSnapshot(
+      doc(db, "settings", "store"),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          setSettings(docSnap.data());
+        }
+      },
+      (error) => {
+        console.error("Store settings listener error:", error);
       }
+    );
 
-    };
-
-    loadSettings();
-
+    return () => unsubscribe();
   }, []);
 
   return settings;
-
 }

@@ -27,19 +27,17 @@ export default function StoreSettings() {
   const [aboutTitle, setAboutTitle] = useState("");
   const [aboutContent, setAboutContent] = useState("");
 
-  // Category Grid (6 categories)
-  const [category1Text, setCategory1Text] = useState("Mobiles");
-  const [category1Icon, setCategory1Icon] = useState("📱");
-  const [category2Text, setCategory2Text] = useState("Kitchen Appliances");
-  const [category2Icon, setCategory2Icon] = useState("🍳");
-  const [category3Text, setCategory3Text] = useState("Refrigerators");
-  const [category3Icon, setCategory3Icon] = useState("❄️");
-  const [category4Text, setCategory4Text] = useState("Washing Machines");
-  const [category4Icon, setCategory4Icon] = useState("🧺");
-  const [category5Text, setCategory5Text] = useState("Speakers");
-  const [category5Icon, setCategory5Icon] = useState("🔊");
-  const [category6Text, setCategory6Text] = useState("Home Appliances");
-  const [category6Icon, setCategory6Icon] = useState("🏠");
+  // Dynamic Categories
+  const [categories, setCategories] = useState([
+    { id: "mobiles", name: "Mobiles", icon: "📱" },
+    { id: "kitchen-appliances", name: "Kitchen Appliances", icon: "🍳" },
+    { id: "refrigerators", name: "Refrigerators", icon: "❄️" },
+    { id: "washing-machines", name: "Washing Machines", icon: "🧺" },
+    { id: "speakers", name: "Speakers", icon: "🔊" },
+    { id: "home-appliances", name: "Home Appliances", icon: "🏠" },
+  ]);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [newCategoryIcon, setNewCategoryIcon] = useState("");
 
   // Featured Products Section
   const [featuredHeading, setFeaturedHeading] = useState("");
@@ -68,19 +66,10 @@ export default function StoreSettings() {
       setAboutTitle(data.aboutTitle || "");
       setAboutContent(data.aboutContent || "");
 
-      // Category Grid
-      setCategory1Text(data.category1Text || "Mobiles");
-      setCategory1Icon(data.category1Icon || "📱");
-      setCategory2Text(data.category2Text || "Kitchen Appliances");
-      setCategory2Icon(data.category2Icon || "🍳");
-      setCategory3Text(data.category3Text || "Refrigerators");
-      setCategory3Icon(data.category3Icon || "❄️");
-      setCategory4Text(data.category4Text || "Washing Machines");
-      setCategory4Icon(data.category4Icon || "🧺");
-      setCategory5Text(data.category5Text || "Speakers");
-      setCategory5Icon(data.category5Icon || "🔊");
-      setCategory6Text(data.category6Text || "Home Appliances");
-      setCategory6Icon(data.category6Icon || "🏠");
+      // Dynamic Categories
+      if (data.categories && Array.isArray(data.categories)) {
+        setCategories(data.categories);
+      }
 
       // Featured Products
       setFeaturedHeading(data.featuredHeading || "Featured Products");
@@ -118,13 +107,8 @@ export default function StoreSettings() {
         storeName, whatsapp, phone, email, address, hours, facebook,
         // About Section
         aboutTitle, aboutContent,
-        // Category Grid
-        category1Text, category1Icon,
-        category2Text, category2Icon,
-        category3Text, category3Icon,
-        category4Text, category4Icon,
-        category5Text, category5Icon,
-        category6Text, category6Icon,
+        // Dynamic Categories
+        categories,
         // Featured Products
         featuredHeading,
         // Footer
@@ -183,48 +167,65 @@ export default function StoreSettings() {
 
         <hr />
         <h2>Category Grid (Homepage)</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "16px", marginTop: "12px" }}>
-          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa" }}>
-            <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "16px" }}>Category 1</h3>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-              <input placeholder="Icon/Emoji (e.g. 📱)" value={category1Icon} onChange={(e) => setCategory1Icon(e.target.value)} style={{ width: "50px" }} />
-              <input placeholder="Category Text (e.g. Mobiles)" value={category1Text} onChange={(e) => setCategory1Text(e.target.value)} style={{ flex: "1" }} />
+        <div style={{ marginTop: "12px" }}>
+          {categories.map((cat, idx) => (
+            <div key={cat.id} style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa", marginBottom: "12px", display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
+              <input
+                placeholder="Icon/Emoji"
+                value={cat.icon}
+                onChange={(e) => setCategories(categories.map((c, i) => i === idx ? { ...c, icon: e.target.value } : c))}
+                style={{ width: "50px" }}
+              />
+              <input
+                placeholder="Category Name"
+                value={cat.name}
+                onChange={(e) => setCategories(categories.map((c, i) => i === idx ? { ...c, name: e.target.value } : c))}
+                style={{ flex: "1", minWidth: "150px" }}
+              />
+              <input
+                placeholder="URL ID (e.g. mobiles)"
+                value={cat.id}
+                onChange={(e) => setCategories(categories.map((c, i) => i === idx ? { ...c, id: e.target.value.toLowerCase().replace(/\s+/g, '-') } : c))}
+                style={{ width: "150px", fontSize: "13px", color: "var(--text-muted)" }}
+              />
+              <button
+                type="button"
+                onClick={() => setCategories(categories.filter((_, i) => i !== idx))}
+                style={{ background: "#fee2e2", color: "#dc2626", border: "none", padding: "6px 12px", borderRadius: "6px", cursor: "pointer", fontSize: "13px", fontWeight: 600 }}
+              >
+                Delete
+              </button>
             </div>
-          </div>
-          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa" }}>
-            <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "16px" }}>Category 2</h3>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-              <input placeholder="Icon/Emoji (e.g. 🍳)" value={category2Icon} onChange={(e) => setCategory2Icon(e.target.value)} style={{ width: "50px" }} />
-              <input placeholder="Category Text (e.g. Kitchen Appliances)" value={category2Text} onChange={(e) => setCategory2Text(e.target.value)} style={{ flex: "1" }} />
-            </div>
-          </div>
-          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa" }}>
-            <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "16px" }}>Category 3</h3>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-              <input placeholder="Icon/Emoji (e.g. ❄️)" value={category3Icon} onChange={(e) => setCategory3Icon(e.target.value)} style={{ width: "50px" }} />
-              <input placeholder="Category Text (e.g. Refrigerators)" value={category3Text} onChange={(e) => setCategory3Text(e.target.value)} style={{ flex: "1" }} />
-            </div>
-          </div>
-          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa" }}>
-            <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "16px" }}>Category 4</h3>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-              <input placeholder="Icon/Emoji (e.g. 🧺)" value={category4Icon} onChange={(e) => setCategory4Icon(e.target.value)} style={{ width: "50px" }} />
-              <input placeholder="Category Text (e.g. Washing Machines)" value={category4Text} onChange={(e) => setCategory4Text(e.target.value)} style={{ flex: "1" }} />
-            </div>
-          </div>
-          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa" }}>
-            <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "16px" }}>Category 5</h3>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-              <input placeholder="Icon/Emoji (e.g. 🔊)" value={category5Icon} onChange={(e) => setCategory5Icon(e.target.value)} style={{ width: "50px" }} />
-              <input placeholder="Category Text (e.g. Speakers)" value={category5Text} onChange={(e) => setCategory5Text(e.target.value)} style={{ flex: "1" }} />
-            </div>
-          </div>
-          <div style={{ border: "1px solid var(--border)", borderRadius: "8px", padding: "12px", background: "#fafafa" }}>
-            <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "16px" }}>Category 6</h3>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "8px" }}>
-              <input placeholder="Icon/Emoji (e.g. 🏠)" value={category6Icon} onChange={(e) => setCategory6Icon(e.target.value)} style={{ width: "50px" }} />
-              <input placeholder="Category Text (e.g. Home Appliances)" value={category6Text} onChange={(e) => setCategory6Text(e.target.value)} style={{ flex: "1" }} />
-            </div>
+          ))}
+          <div style={{ display: "flex", gap: "8px", marginTop: "16px", flexWrap: "wrap" }}>
+            <input
+              placeholder="New Category Name (e.g. Tablets)"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              style={{ flex: "1", minWidth: "180px", padding: "10px 12px", border: "1px solid var(--border)", borderRadius: "6px" }}
+            />
+            <input
+              placeholder="Icon/Emoji (e.g. 📱)"
+              value={newCategoryIcon}
+              onChange={(e) => setNewCategoryIcon(e.target.value)}
+              style={{ width: "60px", padding: "10px 12px", border: "1px solid var(--border)", borderRadius: "6px", textAlign: "center" }}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                if (newCategoryName.trim() && newCategoryIcon.trim()) {
+                  const newId = newCategoryName.toLowerCase().replace(/\s+/g, '-');
+                  if (!categories.some(c => c.id === newId)) {
+                    setCategories([...categories, { id: newId, name: newCategoryName.trim(), icon: newCategoryIcon.trim() }]);
+                    setNewCategoryName("");
+                    setNewCategoryIcon("");
+                  }
+                }
+              }}
+              style={{ padding: "10px 16px", background: "var(--navy)", color: "white", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: 600 }}
+            >
+              Add Category
+            </button>
           </div>
         </div>
 

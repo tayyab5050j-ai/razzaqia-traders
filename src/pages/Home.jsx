@@ -1,4 +1,5 @@
 import useStoreSettings from "../hooks/useStoreSettings";
+import useCategories from "../hooks/useCategories";
 import { useEffect, useState } from "react";
 import Navbar from "../components/NavbarTemp";
 import Sidebar from "../components/Sidebar";
@@ -15,6 +16,7 @@ export default function Home() {
   const [bannerLoading, setBannerLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const settings = useStoreSettings();
+  const { categories } = useCategories();
   const showLocation = settings?.showLocation !== false;
   const showHeroButton = settings?.showHeroButton !== false;
 
@@ -85,12 +87,11 @@ export default function Home() {
       )}
 
       <div className="category-grid">
-        <Link to="/products/Mobiles" className="category-card">📱<span>Mobiles</span></Link>
-        <Link to="/products/Kitchen Appliances" className="category-card">🍳<span>Kitchen Appliances</span></Link>
-        <Link to="/products/Refrigerators" className="category-card">❄️<span>Refrigerators</span></Link>
-        <Link to="/products/Washing Machines" className="category-card">🧺<span>Washing Machines</span></Link>
-        <Link to="/products/Speakers" className="category-card">🔊<span>Speakers</span></Link>
-        <Link to="/products/Home Appliances" className="category-card">🏠<span>Home Appliances</span></Link>
+        {categories.map((cat) => (
+          <Link key={cat.id} to={`/products/${cat.id}`} className="category-card">
+            {cat.icon}<span>{cat.name}</span>
+          </Link>
+        ))}
       </div>
 
       <section className="about-section">
