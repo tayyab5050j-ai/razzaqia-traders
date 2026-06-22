@@ -1,35 +1,6 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../services/firebase";
 
 export default function Footer() {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(db, "settings", "store"),
-      (settingsSnap) => {
-        if (settingsSnap.exists()) {
-          const data = settingsSnap.data();
-          if (data.categories && Array.isArray(data.categories)) {
-            setCategories(data.categories);
-          } else {
-            setCategories([
-              { id: "mobiles", name: "Mobiles", icon: "📱" },
-              { id: "kitchen-appliances", name: "Kitchen Appliances", icon: "🍳" },
-              { id: "refrigerators", name: "Refrigerators", icon: "❄️" },
-              { id: "washing-machines", name: "Washing Machines", icon: "🧺" },
-              { id: "speakers", name: "Speakers", icon: "🔊" },
-              { id: "home-appliances", name: "Home Appliances", icon: "🏠" },
-            ]);
-          }
-        }
-      }
-    );
-    return () => unsubscribe();
-  }, []);
-
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -55,11 +26,6 @@ export default function Footer() {
         <div className="footer-links-col">
           <h4>Shop</h4>
           <Link to="/products">All Products</Link>
-          {categories.map((cat) => (
-            <Link key={cat.id} to={`/products/${cat.id}`}>
-              {cat.icon} {cat.name}
-            </Link>
-          ))}
         </div>
 
         <div className="footer-links-col">
